@@ -38,4 +38,11 @@ class MerkleTreeHash(object):
                     hasher.update(k[0]+k[1])
                     secondary.append(hasher.hexdigest())
 
+                # Now, becuase this is a recursive method, we need to determin hen we only have a single item in the list. This marks the end of the iteration and we can return the last hash as the merkle root.
+                if len(secondary) == 1:
+                    # Note, we only returning the first 64 characters, however if you want to return the entire hash just remove the last section [0:64].
+                    return secondary[0][0:64]
+                else:
+                    # If the number of items in thelist is more than one, we still need ro iterate through this so we pass it back to the method. We pass the secondary list since it holds the second iteration method results.
+                    return self.find_merkle_hash(secondary)
                     
