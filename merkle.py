@@ -25,4 +25,17 @@ class MerkleTreeHash(object):
                 blocks.append(m)
 
                 list_len = len(blocks)
-                # Adjust the block of hashes until we have an even number of items in the blocks, this entails appeding to the end of the block 
+                # Adjust the block of hashes until we have an even number of items in the blocks, this entails appeding to the end of the block the last entry. To do this we use the modulus math to determin when we have an even number of items.
+                while list_len % 2 != 0:
+                    blocks.extend(blocks[-1:])
+                    list_len = len(blocks)
+
+                # Now we have an even number of itmes in the block we need to group the itmes in twos.
+                secondary = []
+                for k in [blocks[x:x+2] for x in xrange(0, len(blocks), 2)]:
+                    # Note k is a list with only two itmes, which is what we want. This is so that we can concantonate them and create a new hash from them.
+                    hasher = hashlib.sha256()
+                    hasher.update(k[0]+k[1])
+                    secondary.append(hasher.hexdigest())
+
+                    
