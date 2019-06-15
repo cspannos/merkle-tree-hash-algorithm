@@ -45,4 +45,23 @@ class MerkleTreeHash(object):
                 else:
                     # If the number of items in thelist is more than one, we still need ro iterate through this so we pass it back to the method. We pass the secondary list since it holds the second iteration method results.
                     return self.find_merkle_hash(secondary)
-                    
+
+if __name__ == '__main__':
+
+    # Test the class. We will test by generating 13 random hashes and then try to find their merkle tree hash. Note you can always build hashes directly from lists by reading the content of the paths to the hashing then create a list of hashes from it to be passed to this Implementation.
+    import uuid
+    file_hashes = []
+
+    for i in range(0,13):
+        file_hashes.append(str(uuid.uuid4().hex))
+
+        print 'Finding the merkle tree hash of {0} random hashes' .format(
+            len(file_hashes)
+        )
+
+        cls = MerkleTreeHash()
+        mk = cls.find_merkle_hash(file_hashes)
+        print 'the merkle tree hash of hashes below is : {0}' .format(mk)
+        print '...'
+        print file_hashes
+        # Now lets go ahead and run the test
